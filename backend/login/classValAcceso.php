@@ -32,7 +32,7 @@ class ValidarAcceso
 
         $counter = 0;
 
-        if (!preg_match("/[^a-zA-Z.]/", $this->user))
+        if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $this->user))
         {
             $this->msj['user'] = $this->user;
         }

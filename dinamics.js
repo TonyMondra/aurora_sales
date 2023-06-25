@@ -47,12 +47,13 @@ $(document).ready(function () {
         })
 
             .done(function (data) {
-                //console.log(data);
+                console.log(data);
                 if (data.credenciales == "ok") {
                     window.location.replace("interfaces/cotizar.php");
                 }
 
                 else {
+                    console.log(data.credenciales);
                     validarInputs(data);
                 }
 

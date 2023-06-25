@@ -25,7 +25,7 @@ $pass = $resAcceso['pass'];
 $errores = $resAcceso['errors'];
 
 //comprueba si el usuario existe, sin comprometer el password
-$searchUser = "SELECT * FROM usuarios WHERE userName = ? ";
+$searchUser = "SELECT user_email FROM users WHERE user_email = ? ";
 $respuesta = $conexion->prepare($searchUser);
 $respuesta->execute([$user]);
 
@@ -36,23 +36,20 @@ $foundUser = $respuesta->rowCount();
 # si el usuario existe procece a validar si el password coincide con el usuario capturado
 if ($foundUser > 0) {
 
-    $buscarRegistro = "SELECT * FROM usuarios WHERE userName = ? AND userPass = ? ";
+    $buscarRegistro = "SELECT * FROM users WHERE user_email = ? ";
     $resp = $conexion->prepare($buscarRegistro);
-    $resp->execute([$user, $pass]);
+    $resp->execute([$user]);
+    $fetchdata = $resp->fetch();
 
-    $registrosEncontrados = $resp->rowCount();
+    //$registrosEncontrados = $resp->rowCount();
 
-    if ($registrosEncontrados > 0) {
+    if ($fetchdata['user_email'] && password_verify($pass, $fetchdata['user_pass'])) {
         $data['credenciales'] = "ok";
-    }
-
-    else if ($registrosEncontrados == 0) {
+    } else {
         $data['credenciales'] = "passError";
     }
     
-} 
-
-elseif ($foundUser == 0) {
+} elseif ($foundUser == 0) {
     $data['credenciales'] = "inexistente";
 }
 
