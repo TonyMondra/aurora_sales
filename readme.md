@@ -1,4 +1,4 @@
-se omiten los siguientes directorios por su peso, deberan subirse mediante sftp al servidor:
+los siguientes directorios contienen archivos pesados, por lo tanto deberan subirse al servidor mediante sftp:
  media/
  fpdf/
  interfaces/imgProd/
