@@ -1,0 +1,218 @@
+body {
+    display: grid;
+}
+
+nav.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: white!important;
+    box-shadow: 0 5px 5px -5px #333;
+}
+
+
+.container-fluid {
+    margin: 10px 17% 10px 17%;
+    --bs-gutter-x: 0%;
+}
+
+
+.nav-ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0px;
+    margin-right: 0%;
+    margin-left: 0%;
+    padding-right: 0%;
+}
+
+.navbar-brand {
+    background-color: white;
+    font-size: large;
+    color: rgb(135, 18, 245) !important;
+    font-weight: 500;
+}
+
+.nav-item, .nav-link {
+    color: rgba(83, 82, 82, 0.781)!important;
+    font-weight: 500;
+    background-color: whitesmoke;
+    margin-right: 0%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link:hover {
+    background-color: rgb(135, 18, 245)!important;
+    color: whitesmoke!important;
+    font-weight: 500;
+    
+}
+
+
+
+#btn-add-box {
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.banner-add {
+    height: 40px;
+    width: 59%;
+    margin: 10px 17% 10px 17%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#newProduct {
+    position: fixed;    
+    right: 25px;
+}
+
+
+div.tabloide {
+    display: block;
+    overflow-x: auto;
+    justify-content: center;
+    margin: 20px;
+
+}
+
+
+.col-sm-12>#tablaProductos {
+    background-color: rgba(198, 235, 241, 0.267);
+    width: 50%;
+    margin: auto;
+}
+
+
+/*.col-sm-12:has(> #tablaProductos) {
+    border: 3px rgb(255, 47, 151) solid;
+    width: 100%;
+}*/
+
+img {
+    width: 150px;
+    height: 150px;
+}
+
+.invalid-feedback {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+}
+
+.input-group {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.form-floating {
+    margin-bottom: 0px !important;
+}
+
+.last-added-row {
+    animation: blink 4s linear 1 ;
+}
+
+@keyframes blink {
+    0% {
+      background-color: rgb(175, 250, 156);
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+        background-color: rgb(177, 238, 136);
+    }
+  }
+
+.editedRow {
+    animation: editado 4s linear 1;
+}
+
+@keyframes editado {
+    0% {
+      background-color: rgb(163, 248, 237);
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+        background-color: rgb(163, 248, 237);
+    }
+  }
+
+
+.selectedRow {
+    background-color: rgb(210, 174, 243);
+}
+
+.deletedRow{
+    animation: eliminar 4s infinite linear;
+  
+}
+
+@keyframes eliminar {
+    0% {
+        background-color: rgb(238, 106, 106);
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+        background-color: rgb(238, 106, 106);
+    }
+  }
+
+#tablaProductos_filter>label {
+    width: 180pt;
+}
+
+#tablaProductos_wrapper .row:first-child{
+    margin: auto;
+    width: 1140px !important;
+}
+
+#tablaProductos_wrapper .row:first-child .col-sm-12{
+    width: 100% !important;
+    margin-bottom: 20px;
+}
+
+#tablaProductos_filter{
+    width: 100% !important;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10PX;
+}
+
+#tablaProductos_paginate{
+    width: fit-content;
+}
+
+#tablaProductos_wrapper .row:last-child{
+    margin: auto;
+    width: 950px !important;
+    margin-top: 25px;
+}
+
+#tablaProductos_wrapper .row:last-child .col-sm-12:first-child{
+    width: 50% !important;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#tablaProductos_wrapper .row:last-child .col-sm-12:last-child{
+    width: 50% !important;
+    display: flex;
+    justify-content: flex-end;
+}
+

@@ -1,0 +1,272 @@
+body {
+    display: grid;
+}
+
+nav.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: white!important;
+    box-shadow: 0 5px 5px -5px #333;
+}
+
+.container-fluid {
+    margin: 10px 17% 10px 17%;
+    --bs-gutter-x: 0%;
+}
+
+.nav-ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0px;
+    margin-right: 0%;
+    margin-left: 0%;
+    padding-right: 0%;
+}
+
+.navbar-brand {
+    background-color: white;
+    font-size: large;
+    color: rgb(135, 18, 245) !important;
+    font-weight: 500;
+}
+
+.nav-item, .nav-link {
+    color: rgba(83, 82, 82, 0.781)!important;
+    font-weight: 500;
+    background-color: whitesmoke;
+    margin-right: 0%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link:hover {
+    background-color: rgb(135, 18, 245)!important;
+    color: whitesmoke!important;
+    font-weight: 500;    
+}
+
+#btn-add-box {
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.banner-add {
+    height: 40px;
+    width: 59%;
+    margin: 10px 17% 10px 17%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#carrito {
+    position: fixed;    
+    right: 25px;
+}
+
+div.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.tablaProductos-box {
+    display: block;
+    overflow-x: auto;
+    justify-content: center;
+    margin: 20px;
+}
+
+.col-sm-12>#tablaProductos {
+    background-color: rgba(247, 212, 167, 0.267);
+    width: 50%;
+    margin: auto;
+}
+
+img.producto {
+    width: 150px;
+}
+
+.invalid-feedback {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+}
+
+.input-group {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.form-floating {
+    margin-bottom: 0px !important;
+}
+
+#cartCanvas{
+    width: fit-content;
+}
+
+#carritoBox {
+    margin: 10pt;
+}
+
+img.carritoCompras {
+    width: 40pt;
+}
+
+#tableShoppingKart {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.box-compras{
+    display: block;
+}
+
+#totalCompra, #emptyKart, #cartCanvasLabel {
+    margin-top: 40px;
+    width: 100%;
+    font-size: 20pt;
+    font-weight: 500;
+}
+
+#btnCheckOut {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.icoDel{
+    width: 20px;
+}
+
+div.modal-body{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(198, 235, 241, 0.267);
+}
+
+div.datos {
+    margin: 20px;
+    width: 360pt;
+    height: auto;
+    background-color: white;
+}
+
+#listaClientes_wrapper{
+    width: 100%;
+}
+
+#listaClientes {
+    width: 80%;
+    margin: auto;
+    margin-top: 29px;
+    padding: 0%;
+    border-collapse: separate;
+    border-spacing: 15px;
+}
+
+#listaClientes_wrapper > .row{
+    margin: 10pt 10pt 10pt 10pt;
+    padding: 0%;
+}
+
+#listaClientes_wrapper > .row:nth-child(2){
+    margin: 10pt 10pt 10pt 10pt;
+    padding: 0%;
+}
+
+#listaClientes_wrapper > .row:nth-child(2) > .col-sm-12{
+    display: flex;
+    justify-content: center;
+    padding: 0%;
+}
+
+div.datosCompra{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#clienteNuevoBox {
+    width: 100%;
+    align-self: flex-end;
+    display: flex;
+    justify-content: end;
+}
+
+button.select-cliente {
+    width: 5pt;
+}
+
+div.datosCliente {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.formRegBox{
+    width: 100%;
+}
+
+.registroBox{
+    width: 100%;
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
+}
+
+#btnGotoCheck{
+    width: 20t;
+}
+
+
+#tablaProductos_filter>label {
+    width: 180pt;
+}
+
+#tablaProductos_wrapper .row:first-child{
+    margin: auto;
+    width: 1200px !important;
+}
+
+#tablaProductos_wrapper .row:first-child .col-sm-12{
+    width: 100% !important;
+    margin-bottom: 20px;
+}
+
+#tablaProductos_filter{
+    width: 100% !important;
+    display: flex;
+
+    justify-content: flex-start;
+    margin-bottom: 10PX;
+}
+
+#tablaProductos_paginate{
+    width: fit-content;
+}
+
+#tablaProductos_wrapper .row:last-child{
+    margin: auto;
+    width: 950px !important;
+    margin-top: 25px;
+}
+
+#tablaProductos_wrapper .row:last-child .col-sm-12:first-child{
+    width: 50% !important;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#tablaProductos_wrapper .row:last-child .col-sm-12:last-child{
+    width: 50% !important;
+    display: flex;
+    justify-content: flex-end;
+}

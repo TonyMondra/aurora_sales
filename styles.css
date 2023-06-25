@@ -1,0 +1,345 @@
+
+body {
+    display: grid;
+}
+
+nav.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: white!important;
+    box-shadow: 0 5px 5px -5px #333;
+}
+
+
+.container-fluid {
+    margin: 10px 17% 10px 17%;
+    --bs-gutter-x: 0%;
+}
+
+
+.nav-ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0px;
+    margin-right: 0%;
+    margin-left: 0%;
+    padding-right: 0%;
+}
+
+.navbar-brand {
+    background-color: white;
+    font-size: large;
+    color: rgb(135, 18, 245) !important;
+    font-weight: 500;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.nav-item, .nav-link {
+    color: rgba(83, 82, 82, 0.781)!important;
+    font-weight: 500;
+    background-color: whitesmoke;
+    margin-right: 0%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link:hover {
+    background-color: rgb(135, 18, 245)!important;
+    color: whitesmoke!important;
+    font-weight: 500;
+    
+}
+
+
+.login {
+    background-color: rgba(250, 250, 250, 0.925);
+}
+
+.login:hover {
+    background-color: rgba(16, 238, 127, 0.925) !important;
+    color: rgb(135, 18, 245) !important;
+}
+
+
+#inicio {
+    background-color: rgba(153, 151, 148, 0.075);
+}
+
+div.panel-1 {
+    margin: 150px 17% 150px 17%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+div.slogan-container {
+    margin: auto;
+    width: 45%;
+    min-width: 200pt;
+}
+
+div.slogan-text-primario {
+    font-size: 50pt;
+    font-weight: bold;
+    color: rgb(73, 72, 72);
+}
+
+div.slogan-text-secundario {
+    font-size: 15pt;
+    color: rgba(11, 12, 12, 0.658);
+}
+
+.btn-box {
+    margin-top: 40pt;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-probar {
+    background-color: rgb(135, 18, 245);
+    color: rgb(253, 253, 251);
+    height: auto;
+    width: fit-content;
+    font-weight: 500;
+}
+
+
+div.imagenPromo {
+    margin: auto;
+    min-width: 200pt;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+}
+
+img.imagenPromo {
+    width: 100%;
+}
+
+.morado {
+    color: rgb(135, 18, 245) !important;
+}
+
+#software {
+    background: rgb(135, 18, 245);
+    background: linear-gradient(135deg, rgba(135, 18, 245, 0.93) 48%, rgba(116, 21, 204, 0.8603816526610644) 53%, rgba(135, 96, 250, 1) 73%, rgba(138, 88, 237, 0.8491771708683473) 96%);
+}
+
+div.panel-2 {
+    margin-top: 67px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 100%;
+
+}
+
+div.panel2-title {
+    margin: 10px 17% 10px 17%;
+    font-size: xx-large;
+    color: aliceblue;
+}
+
+
+.panel-container2 {
+    margin: 10px 17% 40px 17%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.info1-box-text {
+    width: 40%;
+    min-width: 200pt;
+    margin: auto;
+}
+
+p.main-detail {
+    font-size: xx-large;
+    color: white;
+    font-weight: bold;
+}
+
+.description {
+    padding-top: 20px;
+    font-size: 20px;
+    color: rgb(229, 236, 236);
+}
+
+.info1-box-img {
+    margin: auto;
+    width: 40%;
+    min-width: 200pt;
+    display: flex;
+    justify-content: center;
+}
+
+.imagenWallet {
+    width: 100%;
+}
+
+#carrusel {
+    background-color: #f4f8fb;
+}
+
+#carouselExampleIndicators{
+    margin: 100px 17% 40px 17%;
+}
+
+#precios {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+.panel-3 {
+    margin: 100px 17% 40px 17%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+div.card {
+    width: 25%;
+    min-width: 190pt;
+    min-height: 450px;
+    margin-bottom: 49px;
+    box-shadow: 5px 5px 5px rgb(104, 105, 105);
+}
+
+
+.list-group-item,
+.list-group,
+.card-body,
+.card {
+    border: none;
+    background-color: white;
+}
+
+.cost-plan {
+    font-size: 30pt;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.568);
+}
+
+
+
+#contacto {
+    background-color: #f4f8fb;
+}
+
+
+.panel-4 {
+    background-color: #f4f8fb;
+    margin: 50px 17% 40px 17%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#form-contacto{
+    background-color: white;
+    width: 70%;
+}
+
+
+div.title-form{
+    font-weight: 500;
+    font-size: 1.9vw;
+    text-align: center;
+    margin-bottom: 39pt;
+}
+
+#coments-contacto {
+    height: 100pt;
+}
+
+#btn-enviar-contact{
+    margin-top: 22pt;
+}
+
+#footer {
+    background: rgb(135, 18, 245);
+    background: linear-gradient(135deg, rgba(135, 18, 245, 0.93) 48%, rgba(116, 21, 204, 0.8603816526610644) 53%, rgba(135, 96, 250, 1) 73%, rgba(138, 88, 237, 0.8491771708683473) 96%);
+}
+
+.panel-5{
+    margin: 50px 17% 40px 17%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+div.box-footer{
+    width: 20%;
+    min-width: 100pt;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+ul.box-list {
+    list-style: none;
+    padding-left: 0%;
+    width: 50%; 
+}
+
+li.box-list {
+    margin-top: 4pt;
+    color: white;
+    font-weight: 700;
+}
+
+a.box-link{
+    font-weight: 100!important;
+    color: white;
+    text-decoration: none;
+}
+
+a.box-link:hover {
+    color: greenyellow;
+    font-weight: 600!important;
+}
+
+#privacidad {
+    margin: 50px 17% 40px 17%;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+}
+
+img.footer-icon {
+    width: 100%;
+}
+
+.modal-content {
+    background-color: #f4f8fb;
+}
+
+#footModalReg {
+    display: flex;
+    justify-content: space-between;
+}
+
+.opcionForm {
+    text-decoration: none;
+}
+
+.invalid-feedback {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+}
+
+.input-group {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.form-floating {
+    margin-bottom: 0px !important;
+}
