@@ -73,7 +73,6 @@ else if ($errors > 0) {
 
         if ($value == "incorrecto") {
             $data['datos'][$key] = 'incorrecto';
-
             $errs++;
             $data['errs']= $errs;
         } else {  

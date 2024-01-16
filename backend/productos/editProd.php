@@ -1,7 +1,7 @@
 <?php
 include('../../../../includes/conexion.php');
-include('../../baseDatos/conBD.php');
 include('classValidarProd.php');
+include_once('funciones.php');
 
 // nueva conexion
 $objeto = new Conexion();
@@ -14,22 +14,33 @@ $mb = 1048576;
 $data = [];
 
 //datos recibidos del formulario editar producto
-$editnombreProd = $_POST['editNombreProd'];
-$edittipoProd = $_POST['editTipoProd'];
-$edittalla = $_POST['editTalla'];
-$editmarca = $_POST['editMarca'];
-$editcolor = $_POST['editColor'];
-$editmaterial = $_POST['editMaterial'];
-$editgenero = $_POST['editGenero'];
-$editedad = $_POST['editEdad'];
-$editcostoU = $_POST['editCostoU'];
-$editinventario = $_POST['editInventario'];
+$editName = $_POST['editNombreProd'];
+$editTipo = $_POST['editTipoProd'];
+$editSize = $_POST['editTalla'];
+$editBrand = $_POST['editMarca'];
+$editColor = $_POST['editColor'];
+$editMat = $_POST['editMaterial'];
+$editGen = $_POST['editGenero'];
+$editAge = $_POST['editEdad'];
+$editPrice = $_POST['editCostoU'];
+$editStock = $_POST['editInventario'];
 
 
-// nuevo objeto validacion
-$validarDatos = new ValidarProd($editnombreProd, $edittipoProd, $edittalla, $editmarca, $editcolor, $editmaterial, $editgenero, $editedad, $editcostoU, $editinventario);
+// nueva instancia validacion
+$validarDatos = new ValidarProd(
+    $editName,
+    $editTipo,
+    $editSize,
+    $editBrand,
+    $editColor,
+    $editMat,
+    $editGen,
+    $editAge,
+    $editPrice,
+    $editStock
+);
+
 $producto = $validarDatos->getCleanDatos();
-
 
 // datos recibidos del metodo getCleanDatos()
 $idProd = $_POST['editIdProd'];
@@ -41,163 +52,101 @@ $color = $producto['color'];
 $material = $producto['material'];
 $genero = $producto['genero'];
 $edad = $producto['edad'];
-$costoU = $producto['costoU'] ;
+$costoU = $producto['costoU'];
 $inventario = $producto['inventario'];
 $errors = $producto['errors'];
-
 
 //datos de la imagen
 $inputImg = $_FILES['editImagen']['name'];
 $sizeImg = $_FILES['editImagen']['size'];
-
-
-//renombra la imagen
-$directorio = "imgProd/";
-$imagen = $directorio . date("Y-m-d_H-i-s") . basename($_FILES['editImagen']['name']);
-
+$baseNameImg = $_FILES['editImagen']['name'];
+$dirDestino = "imgProd/";
+$imagen = $dirDestino . date("Y-m-d_H-i-s") . basename($baseNameImg);
 
 //define los formatos validos para la imagen
-$formatos = array('gif', 'png', 'jpg');
+$formatos = array('gif', 'png', 'jpg', 'jpeg');
 $extension = pathinfo($inputImg, PATHINFO_EXTENSION);
 
 
 //comprueba si existe el registro
-$existe = "SELECT * FROM productos WHERE nombreProd = ? AND tipoProd = ? AND talla= ? AND marca= ? AND color = ? 
-AND material = ? AND genero= ? AND edad= ? AND costoU= ? AND inventario = ?";
+$existe = "SELECT * FROM productos WHERE nombre_prod = ? AND tipo_prod = ? AND talla_prod= ? AND marca_prod= ? AND color_prod = ? 
+AND material_prod = ? AND genero_prod= ? AND edad_prod= ? AND costo_prod= ? AND inventario_prod = ?";
 $respuesta = $conexion->prepare($existe);
 $params = [$nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario];
 $respuesta->execute($params);
+$rows = $respuesta->fetchAll();
+$numRegistros = count($rows);
 
-$numRegistros = $respuesta->rowCount();
+$regSinImagen = ($numRegistros > 0 && empty($inputImg)); //cuando no se modifican datos ni se agrega nueva imagen
+$imgInvalida = (!empty($inputImg) && ($sizeImg > $mb || !in_array($extension, $formatos)));
 
-# si el registro existe y no se carga ninguna imagen  
-if ($numRegistros > 0 && empty($inputImg)) {
-    $errors++;
-}
+$imgEmpty = empty($inputImg);
+$imgInvalidSize = !empty($inputImg) && $sizeImg > $mb;
+$imgInvalidFormat = !empty($inputImg) && !in_array($extension, $formatos);
 
 
-// si la imagen tiene errores
-if (!empty($inputImg) && ($sizeImg > $mb || !in_array($extension, $formatos))) {
-    $errors++;
-}
 
-######################################################## envia lista de errores ########################################################
-// si existen errores
-if ($errors > 0) {
+######################################################## envia lista de errores si existen ########################################################
+if (($errors > 0) || $regSinImagen || $imgInvalidSize || $imgInvalidFormata) {
 
+    $errs = 0;
     // errores en los inputs
     foreach ($producto as $key => $value) {
 
-        if ($value == "incorrecto") {
-            $data[$key] = 'incorrecto';
-        } else {
-            $data[$key] = 'correcto';
-        }
+        $data[$key] = ($value == "incorrecto") ? ('incorrecto') : 'correcto';
+        if ($data[$key] == "incorrecto"){$errs++; }
+
     }
     // errores en la imagen
-    if(empty($inputImg))
-    {
-        $data['picture'] = "correcto";
-    } 
-    else if (!empty($inputImg) && $sizeImg > $mb) {
-        $data['picture'] = "sizeLimit";
-    } else if (!empty($inputImg) && !in_array($extension, $formatos)) {
-        $data['picture'] = "invalidExtension";
-    }
-
-    // error si el producto ya existe
-    if ($numRegistros > 0 && empty($inputImg))
-    {
-        $data['registro'] = "existente";
-    }
+    $data['picture'] = $imgEmpty ? "correcto" : ($imgInvalidSize ? "sizeLimit" : ($imgInvalidFormat ? "invalidExtension" : null));
     
-}
+    if ($imgInvalidSize || $imgInvalidFormat) {$errs++;}
+    $data['errs']= $errs;
 
- ######################################################## actualiza todos los campos del registro ###########################################
-elseif ($numRegistros == 0 && !empty($inputImg)) { //si el registro no existe y se carga una imagen
-
-
-        //elimina imagen anterior
-        $buscarImg = "SELECT * FROM productos WHERE id_producto='$idProd' ";
-        $respuesta = $conexion->prepare($buscarImg);
-        $respuesta->execute();
-        $fila = $respuesta->fetchAll(PDO::FETCH_ASSOC);
-        $oldImagen = "../../interfaces/" . $fila[0]['imgn'];
-
-        unlink($oldImagen);
-
-        //mueve la imagen subida a la caperta imag
-        move_uploaded_file($_FILES['editImagen']['tmp_name'], '../../interfaces/' . $imagen);
-
-        // update producto
-        $actualizar = "UPDATE productos SET imgn=?, nombreProd=?, tipoProd=?, talla=?, marca=?, 
-            color=?, material=?, genero=?, edad=?, costoU=?, inventario=? WHERE id_producto=? ";
-        $resultado = $conexion->prepare($actualizar);
-        $params = [$imagen, $nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario, $idProd];
-
-        $resultado->execute($params);
-
-        $seleccionar = "SELECT * FROM productos ORDER BY id_producto DESC";
-        $result = $conexion->prepare($seleccionar);
-        $result->execute();
-
-        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+    //registro existente
+    $data['registro'] = ($numRegistros > 0 && empty($inputImg)) ? "existente" : "";
 
 }
 
+######################################################## actualiza datos e imagen ###########################################
+elseif ($numRegistros == 0 && !$imgEmpty && !$imgInvalidSize && !$imgInvalidFormata) {
+
+    //reemplaza imagen del producto en el almacenamiento local
+    updateLocalImg($idProd, $conexion, $imagen);
+
+    // parametros a actualizar
+    $params = [$imagen, $nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario, $idProd];
+
+    $data = updateAll($conexion, $params);
+
+}
 
 
 ######################################################## solo actualiza la imagen ########################################################
-elseif ($numRegistros > 0 && !empty($inputImg)) { // si el registro existe y se carga una nueva imagen
+elseif ($numRegistros > 0 && !$imgEmpty && !$imgInvalidSize && !$imgInvalidFormata) {
 
+    //reemplaza imagen del producto en el almacenamiento local
+    updateLocalImg($idProd, $conexion, $imagen);
 
-        //elimina imagen anterior
-        $buscarImg = "SELECT * FROM productos WHERE id_producto='$idProd' ";
-        $respuesta = $conexion->prepare($buscarImg);
-        $respuesta->execute();
-        $fila = $respuesta->fetchAll(PDO::FETCH_ASSOC);
-        $oldImagen = "../../interfaces/" . $fila[0]['imgn']; // indece de la imagen
-        unlink($oldImagen);
+    // parametros a actualizar
+    $params = [$imagen, $idProd];
 
-        //mueve la imagen subida a una ubicacion local
-        move_uploaded_file($_FILES['editImagen']['tmp_name'], '../../interfaces/' . $imagen);
-
-        // update productos
-        $actualizar = "UPDATE productos SET imgn=? WHERE id_producto=? ";
-        $resultado = $conexion->prepare($actualizar);
-        $resultado->execute([$imagen, $idProd]);
-
-        $seleccionar = "SELECT * FROM productos ORDER BY id_producto DESC";
-        $result = $conexion->prepare($seleccionar);
-        $result->execute();
-
-        $data = $result->fetchAll(PDO::FETCH_ASSOC); 
+    //actualiza imagen
+    $data = updateOnlyImg($conexion, $params);
 }
 
 
+######################################################## solo actualiza datos ########################################################
+elseif ($numRegistros == 0 && $imgEmpty) {
 
-
-######################################################## actualiza datos y conserva la imagen ########################################################
-elseif ($numRegistros == 0 && empty($inputImg)) { //si el registro no existe y no se carga una imagen
-
-    // update del producto sin imagen 
-    $actualizar = "UPDATE productos SET nombreProd=?, tipoProd=?, talla=?, marca=?, color=?, 
-         material=?, genero=?, edad=?, costoU=?, inventario=? WHERE id_producto=? ";
-    $resultado = $conexion->prepare($actualizar);
+    // parametros a actualizar
     $params = [$nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario, $idProd];
-    $resultado->execute($params);
 
-    $seleccionar = "SELECT * FROM productos ORDER BY id_producto DESC";
-    $result = $conexion->prepare($seleccionar);
-    $result->execute();
+    //update
+    $data = updateData($conexion, $params);
 
-    $data = $result->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
-
-
-
-echo json_encode($data); //envio el array final el formato json a AJAX
-//$conexion = null;
-//$conbd->close();
+echo json_encode($data); //envia el array en formato json a AJAX
+$conexion = null;

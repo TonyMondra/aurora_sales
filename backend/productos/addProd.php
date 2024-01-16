@@ -1,6 +1,5 @@
 <?php
 include('../../../../includes/conexion.php');
-include('../../baseDatos/conBD.php');
 include('classValidarProd.php');
 
 //define el tamaño de un mb en bytes
@@ -27,7 +26,19 @@ $addcostoU = $_POST['addCostoU'];
 $addinventario = $_POST['addInventario'];
 
 // nuevo objeto validacion
-$validarDatos = new ValidarProd($addnombreProd, $addtipoProd, $addtalla, $addmarca, $addcolor, $addmaterial, $addgenero, $addedad, $addcostoU, $addinventario);
+$validarDatos = new ValidarProd(
+    $addnombreProd,
+    $addtipoProd,
+    $addtalla,
+    $addmarca,
+    $addcolor,
+    $addmaterial,
+    $addgenero,
+    $addedad,
+    $addcostoU,
+    $addinventario
+);
+
 $producto = $validarDatos->getCleanDatos();
 
 // datos recibido del metodo clean data
@@ -47,87 +58,67 @@ $errors = $producto['errors'];
 $inputImg = $_FILES['addImagen']['name'];
 $sizeImg = $_FILES['addImagen']['size'];
 
-
 //renombra la imagen
 $directorio = "imgProd/";
 $imagen = $directorio . date("Y-m-d_H-i-s") . basename($_FILES['addImagen']['name']);
 
-
 //define los formatos validos
-$formatos = array('gif', 'png', 'jpg');
+$formatos = array('gif', 'png', 'jpg', 'jpeg');
 $extension = pathinfo($inputImg, PATHINFO_EXTENSION);
 
 
-
 //comprueba si el producto ya existe
-$existe = "SELECT * FROM productos WHERE nombreProd = ? AND tipoProd = ? AND talla= ? AND marca= ? AND color = ? AND material = ? AND genero = ? AND edad = ?";
-$resultado = $conexion->prepare($existe);
-$parametros = [$nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad ];
+$consulta = "SELECT * FROM productos WHERE nombre_prod = ? AND tipo_prod = ? AND talla_prod = ? AND marca_prod = ? AND color_prod = ? AND material_prod = ? AND genero_prod = ? AND edad_prod = ?";
+$resultado = $conexion->prepare($consulta);
+$parametros = [$nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad];
 $resultado->execute($parametros);
+$rows = $resultado->fetchAll();
+$numRegistros = count($rows);
 
-$numRegistros = $resultado->rowCount();
+$imgEmpty = empty($inputImg);
+$imgInvalidSize = !empty($inputImg) && $sizeImg > $mb;
+$imgInvalidFormat = !empty($inputImg) && !in_array($extension, $formatos);
 
-// generar error si el registro existe  
-if ($numRegistros > 0) {
-    $errors++;
-}
-
-
-// generar error si la imagen es incorrect 
-if (empty($inputImg) || $sizeImg > $mb || !in_array($extension, $formatos)) {
-    $errors++;
-}
 
 // devuelve un arreglo con errores si existen 
-if ($errors > 0) {
+if ($errors > 0 || $numRegistros > 0 || $imgEmpty || $imgInvalidSize || $imgInvalidFormat) {
+
+    $errs = 0;
 
     foreach ($producto as $key => $value) {
 
-        if ($value == "incorrecto") {
-            $data[$key] = 'incorrecto';
-        } else {
-            $data[$key] = 'correcto';
-        }
-    }
-// errores en la imagen
-    if (empty($inputImg)) {
-        $data['picture'] = "noImagen";
-    } else if ($sizeImg > $mb) {
-        $data['picture'] = "sizeLimit";
-    } else if (!in_array($extension, $formatos)) {
-        $data['picture'] = "invalidExtension";
+        $data[$key] = ($value == "incorrecto") ? ('incorrecto') : 'correcto';
+        if ($data[$key] == "incorrecto"){$errs++; }
     }
 
+    // errores en la imagen
+    $data['picture'] = $imgEmpty ? "noImagen" : ($imgInvalidSize ? "sizeLimit" : ($imgInvalidFormat ? "invalidExtension" : null));
+    if ($imgEmpty || $imgInvalidSize || $imgInvalidFormat) {$errs++;}
+    $data['errs'] = $errs;
+
     // si el producto ya existe
-    if ($numRegistros > 0)
-    {
-        $data['registro'] = "existente";
-    }
-    
+    $data['registro'] = ($numRegistros > 0) ? "existente" : "";
 }
 
 
 // inserta un nuevo producto si no existen errores
-else if ($errors == 0) {
+else if ($errors == 0 && $numRegistros == 0 && !$imgEmpty && !$imgInvalidSize && !$imgInvalidFormat) {
 
-    if ($numRegistros == 0) {
+    //mueve la imagen subida a una ubicacion local
+    move_uploaded_file($_FILES['addImagen']['tmp_name'], '../../interfaces/' . $imagen);
 
-        //mueve la imagen subida a una ubicacion local
-        move_uploaded_file($_FILES['addImagen']['tmp_name'], '../../interfaces/' . $imagen);
+    $params = [$imagen, $nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario];
 
-        // se hace insert con imagen 
-        $insertar = "INSERT INTO productos(imgn, nombreProd, tipoProd, talla, marca, color, material, genero, edad, costoU, inventario) VALUES 
-                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $resultado = $conexion->prepare($insertar);
+    // se hace insert con imagen 
+    $insertar = "INSERT INTO productos(img_prod, nombre_prod, tipo_prod, talla_prod, marca_prod, color_prod, material_prod, genero_prod, edad_prod, costo_prod, inventario_prod) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $params = [$imagen, $nombreProd, $tipoProd, $talla, $marca, $color, $material, $genero, $edad, $costoU, $inventario ];
+    $resultado = $conexion->prepare($insertar);
 
-        //prepare statement
-        $resultado->execute($params);
+    //prepare statement
+    $resultado->execute($params);
 
-
-        $data['response'] = 'ok';
-    }
+    $data['response'] = 'ok';
 }
 
 

@@ -54,11 +54,11 @@
     <div id="btn-add-box">
         <div class="banner-add ">
 
-            <button class="btn btn-success botones sticky-bottom" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            <button class="btn btn-success botones sticky-bottom" data-bs-toggle="modal" data-bs-target="#modalAddProd">
                 Agregar Producto
             </button>
 
-            <button id="newProduct" class="btn btn-success botones sticky-bottom" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            <button id="newProduct" class="btn btn-success botones sticky-bottom" data-bs-toggle="modal" data-bs-target="#modalAddProd">
                 +
             </button>
         </div>
@@ -68,7 +68,7 @@
 
 
     <!-- Modal editar producto -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade" id="modalEditProd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable " id="editProdModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -256,7 +256,7 @@
 
 
     <!-- Modal Agregar Producto -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade" id="modalAddProd" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable" id="addProdModal">
             <div class="modal-content">
                 <div class="modal-header">

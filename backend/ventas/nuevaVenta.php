@@ -22,7 +22,7 @@ $carritoCompras = serialize($carrito);
 $datosCliente = serialize($cliente);
 */
 
-//se convierte el arreglo en json
+//convierte el arreglo en json
 $carritoCompras = json_encode($carrito);
 $datosCliente = json_encode($cliente);
 

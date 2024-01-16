@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-   
+
 
     var tagsAdd = [".val-id-add", ".val-name-add", ".val-aP-add", ".val-aM-add", ".val-tel-add", ".val-dir-add"];
     var tagsEdit = [".val-id-edit", ".val-name-edit", ".val-aP-edit", ".val-aM-edit", ".val-tel-edit", ".val-dir-edit"];
@@ -19,7 +19,7 @@ $(document).ready(function () {
         language: {
             search: "Buscar:",
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "info":"Mostrando _START_ de _END_ de _TOTAL_ registros",
+            "info": "Mostrando _START_ de _END_ de _TOTAL_ registros",
             "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
             "oPaginate": {
                 "sFirst": "Primero",
@@ -135,15 +135,15 @@ $(document).ready(function () {
         })
             .done(function (data) {
                 llenarForma("#tablaUsuarios", table);
-               
+
 
                 if (data.registro == 'existente') {
                     confirm("Cliente existente, revisa los datos");
                     quitarValidacion(tagsAdd);
                 }
                 else {
-                     // si hay errores en los datos
-                     if (data.errs) {
+                    // si hay errores en los datos
+                    if (data.errs) {
                         validarInputs(data, tagsAdd); // validar inputs
                     }
 
@@ -152,7 +152,7 @@ $(document).ready(function () {
                         table.ajax.reload(function () {
                             // agrega una clase al ultimo producto agregado para sobresaltarlo
                             $(table.row(':first').node()).addClass('last-added-row');
-    
+
                             //remueve la clase despues de 5 segundos
                             setTimeout(function () {
                                 $(table.row(':first').node()).removeClass('last-added-row');
@@ -213,10 +213,10 @@ $(document).ready(function () {
                         table.ajax.reload(function () {
 
                             //table.rows(selectedRow).nodes().to$().removeClass('selectedRow');
-    
+
                             // agrega clase al producto despues de haberlo editado para destacarlo
                             table.rows(editedRow).nodes().to$().addClass('editedRow');
-    
+
                             //elimina la clase
                             setTimeout(function () {
                                 table.rows(editedRow).nodes().to$().removeClass('editedRow');
@@ -300,9 +300,8 @@ $(document).ready(function () {
     llenarForma("#tablaUsuarios", table);
     // llama a la funcion para eliminar clientes
     eliminarCliente("#tablaUsuarios", table);
-
     highligthEditedRow("#tablaUsuarios", table);
     highligthSelectedRow("#tablaUsuarios", table);
     highligthDeletedRow("#tablaUsuarios", table);
-    
+
 })

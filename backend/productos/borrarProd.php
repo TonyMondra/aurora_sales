@@ -31,4 +31,4 @@ $resultado->execute();
 
 $data['response'] = "ok";
 
-echo json_encode($data); //envio el array final el formato json a AJAX
+echo json_encode($data); //envia el array final en formato json a AJAX
